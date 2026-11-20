@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Brewer Bubbles &amp; Sons | Tulsa's Finest Sparkling Water</title>
+  <meta name="description" content="Locally sourced sparkling well water from Tulsa, Oklahoma.">
+
+  <!-- Lesson 0 (see js/script.js): adding the "js" class here, in <head>,
+       means the mobile menu never flashes open while the page loads -->
+  <script>document.documentElement.classList.add("js");</script>
+
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
+  <link rel="stylesheet" href="css/style.css">
+
+  <!-- defer: download now, run after the HTML has been read -->
+  <script src="js/script.js" defer></script>
+</head>
+<body>
+
+<!-- =========================================================
+     LINKS 101: every <a> on this page is one of four kinds
+       1. In-page link:  href="#about"         jumps to id="about"
+       2. Email link:    href="mailto:..."     opens the mail app
+       3. Phone link:    href="tel:..."        dials on a phone
+       4. External link: href="https://..."    goes to another site
+     ========================================================= -->
+
+<a class="skip-link" href="#main">Skip to main content</a>
+
+<header id="header">
+  <div class="brand">
+    <img id="header-img" src="https://www.freeiconspng.com/uploads/water-png-water-drops-png-image-6.png" width="52" alt="">
+    <h1 id="title">Brewer Bubbles &amp; Sons</h1>
+  </div>
+
+  <!-- Only shows on small screens, and only when JavaScript is running.
+       aria-expanded tells screen readers whether the menu is open;
+       aria-controls points at the list it opens. -->
+  <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-menu">
+    <span class="nav-toggle-bars" aria-hidden="true"></span>
+    Menu
+  </button>
+
+  <nav id="nav-bar" aria-label="Main">
+    <ul id="nav-menu">
+      <!-- 1. In-page links: href="#" + the id of a section below -->
+      <li><a class="nav-link" href="#about">About</a></li>
+      <li><a class="nav-link" href="#how-we-source">How We Source</a></li>
+      <li><a class="nav-link" href="#availability">Availability</a></li>
+      <li><a class="nav-link" href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main id="main" tabindex="-1">
+  <section id="hero" class="container" aria-labelledby="hero-title">
+    <h2 id="hero-title">Tulsa's Finest Sparkling Water</h2>
+
+    <!-- On a real site, action would be your own server's address.
+         JavaScript (Lesson 3) catches the submit and answers on the page. -->
+    <form id="form" action="https://www.freecodecamp.com/email-submit">
+      <label for="email">Get emails about new products and updates</label>
+      <div class="form-row">
+        <input name="email" id="email" type="email" placeholder="you@example.com" autocomplete="email" required aria-describedby="email-error">
+        <input id="submit" type="submit" value="Subscribe" class="btn">
+      </div>
+      <!-- Empty until JavaScript writes a message into them -->
+      <p id="email-error" class="field-error"></p>
+      <p id="form-status" class="form-status" role="status"></p>
+    </form>
+  </section>
+
+  <section id="about" class="container" aria-labelledby="about-title">
+    <h2 id="about-title" class="section-title">About</h2>
+    <div class="features">
+      <article class="feature">
+        <div class="icon"><i class="fas fa-location-arrow" aria-hidden="true"></i></div>
+        <h3>Locally Sourced</h3>
+        <p>To ensure freshness and authenticity, we work with local suppliers and provide solely within restaurants and businesses in the Tulsa metropolitan area.</p>
+      </article>
+
+      <article class="feature">
+        <div class="icon"><i class="fas fa-faucet" aria-hidden="true"></i></div>
+        <h3>Clean Well Water Goodness</h3>
+        <p>Our naturally-derived well water is tested at the source for quality and consistency, every time.</p>
+      </article>
+
+      <article class="feature">
+        <div class="icon"><i class="fas fa-search-location" aria-hidden="true"></i></div>
+        <h3>Where to Find Us</h3>
+        <p>You can find iterations of our products in local breweries (hard seltzers) as well as local groceries in the Tulsa Metropolitan Area.</p>
+      </article>
+    </div>
+  </section>
+
+  <section id="how-we-source" class="container" aria-labelledby="source-title">
+    <h2 id="source-title" class="section-title">How We Source</h2>
+    <div class="video-frame">
+      <iframe id="video" src="https://www.youtube.com/embed/8eUmVR9cRSE" title="Video: how Brewer Bubbles &amp; Sons sources its water" loading="lazy" allowfullscreen></iframe>
+    </div>
+  </section>
+
+  <section id="availability" class="container" aria-labelledby="availability-title">
+    <h2 id="availability-title" class="section-title">Availability</h2>
+
+    <!-- data-name and data-price are "data attributes": extra facts
+         stored on the element for JavaScript to read (Lesson 4).
+         aria-pressed makes each button an on/off toggle. -->
+    <div class="products-grid">
+      <article class="products" id="welltown">
+        <h3 class="tier">Welltown Well Water</h3>
+        <p class="price">$4.50</p>
+        <p class="blurb">A smooth "hard" seltzer available in collaboration with Welltown Brewery.</p>
+        <button class="btn" type="button" aria-pressed="false" data-name="Welltown Well Water" data-price="4.50">Select<span class="visually-hidden"> Welltown Well Water</span></button>
+      </article>
+
+      <article class="products" id="lion-water">
+        <h3 class="tier">Lion Water</h3>
+        <p class="price">$3.00</p>
+        <p class="blurb">Infused with the health benefits of Lion's Mane.</p>
+        <button class="btn" type="button" aria-pressed="false" data-name="Lion Water" data-price="3.00">Select<span class="visually-hidden"> Lion Water</span></button>
+      </article>
+
+      <article class="products" id="classic">
+        <h3 class="tier">The Classic</h3>
+        <p class="price">$2.79</p>
+        <p class="blurb">No fuss. No frills. Just original.</p>
+        <button class="btn" type="button" aria-pressed="false" data-name="The Classic" data-price="2.79">Select<span class="visually-hidden"> The Classic</span></button>
+      </article>
+    </div>
+
+    <!-- role="status" = screen readers announce changes here politely -->
+    <p id="order-summary" class="order-summary" role="status">No waters selected yet.</p>
+  </section>
+
+  <section id="contact" class="container" aria-labelledby="contact-title">
+    <h2 id="contact-title" class="section-title">Contact</h2>
+    <!-- Placeholder contact details: swap in real ones for a real business.
+         555-01xx numbers and example.com addresses are reserved for examples. -->
+    <ul class="contact-list">
+      <li class="contact-card">
+        <span class="contact-label">Email</span>
+        <!-- 2. Email link -->
+        <a href="mailto:hello@example.com">hello@example.com</a>
+      </li>
+      <li class="contact-card">
+        <span class="contact-label">Phone</span>
+        <!-- 3. Phone link: tel: uses digits only, with the country code -->
+        <a href="tel:+19185550123">(918) 555-0123</a>
+      </li>
+      <li class="contact-card">
+        <span class="contact-label">Find us</span>
+        <!-- 4. External link in a new tab:
+             target="_blank" opens a new tab, rel="noopener noreferrer" stops
+             the other site from controlling this one, and the hidden text
+             warns screen-reader users before the tab changes. -->
+        <a href="https://www.google.com/maps/search/?api=1&amp;query=Tulsa%2C%20OK" target="_blank" rel="noopener noreferrer">Tulsa, OK on Google Maps<span class="visually-hidden"> (opens in a new tab)</span><i class="fas fa-external-link-alt external-icon" aria-hidden="true"></i></a>
+      </li>
+    </ul>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <!-- JavaScript fills in the current year (Lesson 5) -->
+  <p>&copy; <span id="year">2026</span> Brewer Bubbles &amp; Sons, Tulsa, Oklahoma</p>
+  <p>Logo image from <a href="https://www.freeiconspng.com/img/720">freeiconspng.com</a></p>
+  <!-- "#top" is special: it always means the top of the page -->
+  <p><a href="#top">Back to top</a></p>
+</footer>
+
+</body>
+</html>
