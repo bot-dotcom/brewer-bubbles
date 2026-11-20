@@ -1,0 +1,630 @@
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@600;700&family=Nunito+Sans:wght@400;700&display=swap');
+
+/* ==========================================================
+   Design tokens: change the look of the whole page from here
+   ========================================================== */
+:root {
+  --sky: #b4ecff;
+  --mist: #e7f9ff;
+  --ink: #0b1f2a;
+  --ink-soft: #2c4653;
+  --coral: #ffc7b4;
+  --coral-strong: #ff9e7d;
+  --focus: #0050b3;
+  --error: #a4161a;
+
+  --radius: 10px;
+  --border: 2px solid var(--ink);
+  --shadow: 4px 4px 0 var(--ink);
+  --header-h: 88px;     /* a starting guess; JavaScript measures the real one (Lesson 6) */
+  --gap: clamp(1rem, 2vw + 0.5rem, 2rem);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-padding-top: calc(var(--header-h) + 1rem);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+body {
+  margin: 0;
+  background-color: var(--sky);
+  color: var(--ink);
+  font-family: 'Nunito Sans', system-ui, sans-serif;
+  font-size: 1.0625rem;
+  line-height: 1.6;
+}
+
+h1,
+h2,
+h3 {
+  font-family: 'Josefin Sans', 'Nunito Sans', sans-serif;
+  line-height: 1.2;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* ==========================================================
+   Accessibility helpers
+   ========================================================== */
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: 1rem;
+  z-index: 100;
+  padding: 0.75rem 1rem;
+  color: #ffffff;
+  background-color: var(--ink);
+  border-radius: var(--radius);
+  font-weight: 700;
+}
+
+.skip-link:focus {
+  top: 1rem;
+}
+
+:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 3px;
+}
+
+main:focus {
+  outline: none;
+}
+
+/* ==========================================================
+   Links: a visible underline means "this is clickable"
+   ========================================================== */
+
+a {
+  color: var(--ink);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+}
+
+a:hover {
+  text-decoration-thickness: 3px;
+}
+
+.external-icon {
+  margin-left: 0.4em;
+  font-size: 0.75em;
+}
+
+/* ==========================================================
+   Header and navigation
+   ========================================================== */
+
+/* sticky, not fixed: the header keeps its own space at the top of the
+   page, so content can never slide underneath it, whatever its height */
+#header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem 1rem;
+  padding: 0.5rem clamp(1rem, 4vw, 3rem);
+  background-color: var(--mist);
+  border-bottom: 4px solid var(--ink);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+#header-img {
+  width: 52px;
+}
+
+#title {
+  margin: 0;
+  font-size: clamp(1.25rem, 1rem + 1.2vw, 1.75rem);
+}
+
+#nav-menu {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.nav-link {
+  display: block;
+  padding: 0.6rem 0.9rem;
+  color: var(--ink);
+  font-weight: 700;
+  text-decoration: none;
+  border-radius: var(--radius);
+}
+
+.nav-link:hover {
+  background-color: var(--sky);
+  text-decoration: underline;
+}
+
+/* Set by JavaScript (Lesson 2) on the link for the section you're reading */
+.nav-link[aria-current="true"] {
+  color: #ffffff;
+  background-color: var(--ink);
+}
+
+/* Menu button: hidden until the small-screen rules below need it */
+.nav-toggle {
+  display: none;
+  align-items: center;
+  gap: 0.6rem;
+  min-height: 44px;
+  padding: 0.5rem 0.9rem;
+  font: inherit;
+  font-weight: 700;
+  color: var(--ink);
+  background-color: var(--coral);
+  border: var(--border);
+  border-radius: var(--radius);
+  cursor: pointer;
+}
+
+/* Three bars drawn with one span and two shadows */
+.nav-toggle-bars {
+  width: 18px;
+  height: 2px;
+  background-color: var(--ink);
+  box-shadow: 0 -6px 0 var(--ink), 0 6px 0 var(--ink);
+}
+
+/* When open, the bars turn into an X */
+.nav-toggle[aria-expanded="true"] .nav-toggle-bars {
+  box-shadow: none;
+  transform: rotate(45deg);
+}
+
+.nav-toggle[aria-expanded="true"] .nav-toggle-bars::after {
+  content: "";
+  display: block;
+  width: 18px;
+  height: 2px;
+  background-color: var(--ink);
+  transform: rotate(-90deg);
+}
+
+/* ==========================================================
+   Layout
+   ========================================================== */
+
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: clamp(2.5rem, 6vw, 4.5rem) clamp(1rem, 4vw, 2rem);
+}
+
+.section-title {
+  margin: 0 0 2rem;
+  text-align: center;
+  font-size: clamp(1.6rem, 1.2rem + 1.5vw, 2.25rem);
+}
+
+/* ==========================================================
+   Hero and sign-up form
+   ========================================================== */
+
+#hero {
+  padding-top: clamp(3rem, 8vw, 6rem);
+  text-align: center;
+}
+
+#hero h2 {
+  margin: 0 0 1.5rem;
+  font-size: clamp(2rem, 1.4rem + 3vw, 3.25rem);
+}
+
+#form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+#form label {
+  font-weight: 700;
+}
+
+.form-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem;
+  width: 100%;
+}
+
+#email {
+  flex: 1 1 260px;
+  max-width: 360px;
+  min-height: 48px;
+  padding: 0.75rem 1rem;
+  font: inherit;
+  color: var(--ink);
+  background-color: #ffffff;
+  border: var(--border);
+  border-radius: var(--radius);
+}
+
+#email::placeholder {
+  color: #4a6572;
+  opacity: 1;
+}
+
+/* Set by JavaScript (Lesson 3) when the address isn't valid */
+#email[aria-invalid="true"] {
+  border-color: var(--error);
+  box-shadow: 0 0 0 2px var(--error);
+}
+
+.field-error,
+.form-status {
+  margin: 0;
+  font-weight: 700;
+}
+
+.field-error {
+  color: var(--error);
+}
+
+.field-error:empty,
+.form-status:empty {
+  display: none;
+}
+
+.form-status {
+  padding: 0.6rem 1rem;
+  background-color: var(--mist);
+  border: var(--border);
+  border-radius: var(--radius);
+}
+
+/* ==========================================================
+   Buttons
+   ========================================================== */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 0.75rem 1.5rem;
+  font: inherit;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ink);
+  background-color: var(--coral);
+  border: var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s, background-color 0.15s;
+}
+
+.btn:hover {
+  background-color: var(--coral-strong);
+}
+
+.btn:active {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0 var(--ink);
+}
+
+/* A selected product (Lesson 4): dark button with a check mark */
+.btn[aria-pressed="true"] {
+  color: #ffffff;
+  background-color: var(--ink);
+}
+
+.btn[aria-pressed="true"]:hover {
+  background-color: #1d3a4a;
+}
+
+.btn[aria-pressed="true"]::before {
+  content: "\2713";
+  margin-right: 0.5rem;
+}
+
+/* ==========================================================
+   Features
+   ========================================================== */
+
+/* RESPONSIVE WITHOUT MEDIA QUERIES
+   "Fit as many columns as you can, each at least 15rem wide."
+   That's 3 across on a laptop, 2 on a tablet, 1 on a phone, automatically.
+   min(100%, 15rem) stops a card overflowing on a very narrow phone. */
+.features,
+.products-grid,
+.contact-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+  gap: var(--gap);
+}
+
+.feature {
+  padding: 1.75rem 1.5rem;
+  text-align: center;
+  background-color: var(--mist);
+  border: var(--border);
+  border-radius: var(--radius);
+}
+
+.icon {
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 1rem;
+  font-size: 1.6rem;
+  background-color: var(--sky);
+  border: var(--border);
+  border-radius: 50%;
+}
+
+.feature h3 {
+  margin: 0 0 0.5rem;
+  font-size: 1.35rem;
+}
+
+.feature p {
+  margin: 0;
+  color: var(--ink-soft);
+}
+
+/* ==========================================================
+   Video
+   ========================================================== */
+
+.video-frame {
+  max-width: 800px;
+  margin: 0 auto;
+  overflow: hidden;
+  border: var(--border);
+  border-radius: var(--radius);
+  box-shadow: 6px 6px 0 var(--ink);
+}
+
+#video {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  border: 0;
+}
+
+/* ==========================================================
+   Products
+   ========================================================== */
+
+.products {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem 1.5rem;
+  text-align: center;
+  background-color: var(--mist);
+  border: var(--border);
+  border-radius: var(--radius);
+}
+
+.tier {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.price {
+  margin: 0.5rem 0 1rem;
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 2.25rem;
+  font-weight: 700;
+}
+
+.blurb {
+  flex: 1;
+  margin: 0 0 1.5rem;
+  color: var(--ink-soft);
+}
+
+.order-summary {
+  margin: 2rem auto 0;
+  max-width: 640px;
+  padding: 1rem 1.25rem;
+  text-align: center;
+  font-weight: 700;
+  background-color: var(--mist);
+  border: var(--border);
+  border-radius: var(--radius);
+}
+
+/* ==========================================================
+   Contact
+   ========================================================== */
+
+.contact-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.contact-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 1.5rem;
+  text-align: center;
+  background-color: var(--mist);
+  border: var(--border);
+  border-radius: var(--radius);
+}
+
+.contact-label {
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.contact-card a {
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+
+/* ==========================================================
+   Footer
+   ========================================================== */
+
+.site-footer {
+  padding: 2rem 1rem;
+  text-align: center;
+  font-size: 0.95rem;
+  color: #ffffff;
+  background-color: var(--ink);
+}
+
+.site-footer p {
+  margin: 0.25rem 0;
+}
+
+.site-footer a {
+  color: #ffffff;
+}
+
+.site-footer :focus-visible {
+  outline-color: var(--coral);
+}
+
+/* ==========================================================
+   Medium and small screens: fold the nav into a Menu button.
+   960px, not 800px: below about 960px the four links no longer
+   fit on one row beside the name.
+   ========================================================== */
+
+@media (max-width: 960px) {
+  /* Without JavaScript: name on top, links underneath */
+  #header {
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.25rem;
+  }
+
+  #header-img {
+    width: 40px;
+  }
+
+  .nav-link {
+    padding: 0.5rem 0.7rem;
+    font-size: 0.95rem;
+  }
+
+  /* With JavaScript (Lesson 0): name and Menu button share one row */
+  .js #header {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+  }
+
+  .js .brand {
+    flex: 1 1 0;
+    min-width: 0; /* lets a long name wrap instead of pushing the button down */
+  }
+
+  .js .nav-toggle {
+    display: inline-flex;
+    flex: none;
+  }
+
+  /* position: absolute takes the open menu out of the page flow,
+     so it drops down OVER the content instead of pushing it down */
+  .js #nav-bar {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+  }
+
+  .js #nav-menu {
+    display: none;
+    flex-direction: column;
+    padding: 0.5rem clamp(1rem, 4vw, 3rem) 1rem;
+    background-color: var(--mist);
+    border-top: 4px solid var(--ink);
+    border-bottom: 4px solid var(--ink);
+  }
+
+  .js #nav-menu.is-open {
+    display: flex;
+  }
+
+  .js .nav-link {
+    padding: 0.75rem 1rem;
+    font-size: 1.05rem;
+  }
+}
+
+/* Small phones: a smaller name, so it fits on two lines at most */
+@media (max-width: 480px) {
+  #header-img {
+    width: 34px;
+  }
+
+  #title {
+    font-size: 1.15rem;
+  }
+
+  .container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
+/* Very short screens (landscape phones, 200%+ zoom):
+   the header scrolls away so it can't cover half the screen */
+@media (max-height: 480px) {
+  #header {
+    position: static;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn {
+    transition: none;
+  }
+}
